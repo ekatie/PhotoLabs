@@ -1,23 +1,13 @@
 import React from 'react';
-import PhotoListItem from './components/PhotoListItem';
+import HomeRoute from 'components/HomeRoute';
 import './App.scss';
-import PhotoList from 'components/PhotoList';
-
-// const sampleDataForPhotoListItem = {
-//   id: "1",
-//   location: {
-//     city: "Montreal",
-//     country: "Canada",
-//   },
-//   imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-//   username: "Joe Example",
-//   profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-// };
+import photos from './mocks/photos.js';
+import topics from 'mocks/topics';
 
 const App = () => (
   <div className="App">
     {/* { Array.from(Array(3)).map((_, index) => <PhotoListItem key={index}/>) } */}
-    <PhotoList/>
+  <HomeRoute photos={photos} topics={topics}/>
   </div>
 )
 
