@@ -3,16 +3,18 @@ import PhotoListItem from "./PhotoListItem";
 
 import "../styles/PhotoList.scss";
 
-const PhotoList = ({photos}) => {
+const PhotoList = ({photos, favouritePhotos, onAddFavourite, onRemoveFavourite}) => {
   return (
     <ul className="photo-list">
-      {photos.map(({ id, urls, user, location }) => (
+      {photos.map((photo) => (
         <PhotoListItem
-          key={id}
-          imageSource={urls.regular}
-          profile={user.profile}
-          username={user.username}
-          location={location}
+          key={photo.id}
+          imageSource={photo.urls.regular}
+          profile={photo.user.profile}
+          username={photo.user.username}
+          location={photo.location}
+          isFavourite={favouritePhotos.includes(photo.id)}
+          onToggleFavourite={(isFavourite) => isFavourite ? onAddFavourite(photo) : onRemoveFavourite(photo)}
         />
       ))}
     </ul>
