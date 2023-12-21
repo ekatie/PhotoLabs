@@ -17,7 +17,7 @@ return (
     />
     <img className="photo-list__image" src={imageSource} alt="photo" />
     <div className="photo-list__user-details">
-      <img className="photo-list__user-profile" src={profile} alt={`${username}'s profile`} />
+      <img className="photo-list__user-profile" src={profile} alt={"User Profile"} />
       <div className="photo-list__user-info">
         <p>{username}</p>
         <p className="photo-list__user-location">{location.city}, {location.country}</p>
