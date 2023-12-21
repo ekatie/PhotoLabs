@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 import '../styles/HomeRoute.scss'
 
-const HomeRoute = ({topics, photos}) => {
+const HomeRoute = ({topics, photos, onOpenModal}) => {
 
 const [favouritePhotos, setFavouritePhotos] = useState([])
 const [displayAlert, setDisplayAlert] = useState(false)
@@ -29,7 +29,7 @@ const removeFavouritePhoto = (photo) => {
 }
 
 const toggleDisplayAlert = () => {
- return photos.length === 0 ? setDisplayAlert(false) : setDisplayAlert(true)
+ return favouritePhotos.length === 0 ? setDisplayAlert(false) : setDisplayAlert(true)
 }
 
 return (
@@ -40,7 +40,9 @@ return (
   favouritePhotos={favouritePhotos}
   onAddFavourite={(photo) => addFavouritePhoto(photo)}
   onRemoveFavourite={(photo) => removeFavouritePhoto(photo)}
-  onToggleIcon={toggleDisplayAlert} />
+  onToggleIcon={toggleDisplayAlert} 
+  onOpenModal={onOpenModal}
+  />
   </div>
 )
 };
