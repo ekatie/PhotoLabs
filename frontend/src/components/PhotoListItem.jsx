@@ -2,17 +2,18 @@ import React from "react";
 import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
-const PhotoListItem = ({ imageSource, profile, username, location, isFavourite, onToggleFavourite }) => {
+const PhotoListItem = ({ imageSource, profile, username, location, isFavourite, onToggleFavourite, onClick }) => {
 
-  const handleToggleFavourite = () => {
+  const handleToggleFavourite = (event) => {
+    event.stopPropagation();
     onToggleFavourite(!isFavourite);
   }
 
 return (
-  <li className="photo-list__item">
+  <li className="photo-list__item" onClick={onClick}>
     <PhotoFavButton 
     isFavourite={isFavourite}
-    onToggleFavourite={handleToggleFavourite}
+    onToggleFavourite={(event) => handleToggleFavourite(event)}
     />
     <img className="photo-list__image" src={imageSource} alt="photo" />
     <div className="photo-list__user-details">
