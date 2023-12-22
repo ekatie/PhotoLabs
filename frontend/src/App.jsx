@@ -61,6 +61,7 @@ const App = () => {
       />
       <PhotoDetailsModal
         photos={photos}
+        favouritePhotos={favouritePhotos}
         isModalOpen={isModalOpen}
         onClose={closeModal}
         photo={
@@ -71,6 +72,7 @@ const App = () => {
             username: selectedPhoto.user.username,
             location: selectedPhoto.location,
             isFavourite: favouritePhotos.includes(selectedPhoto.id),
+            similar_photos: selectedPhoto.similar_photos,
           }
         }
         addFavouritePhoto={addFavouritePhoto}
