@@ -3,33 +3,30 @@ import PhotoListItem from "./PhotoListItem";
 
 import "../styles/PhotoList.scss";
 
-const PhotoList = ({photos, favouritePhotos, onAddFavourite, onRemoveFavourite, onToggleIcon, onOpenModal}) => {
-
-  const handleAddFavourite = (photo) => {
-    onAddFavourite(photo);
-    onToggleIcon();
-  }
-
-  const handleRemoveFavourite = (photo) => { 
-    onRemoveFavourite(photo);
-    onToggleIcon();
-  }
-
+const PhotoList = ({
+  photos,
+  favouritePhotos,
+  addFavouritePhoto,
+  removeFavouritePhoto,
+  onOpenModal,
+}) => {
   return (
-      <ul className="photo-list">
-        {photos.map((photo) => (
-          <PhotoListItem
-            key={photo.id}
-            imageSource={photo.urls.regular}
-            profile={photo.user.profile}
-            username={photo.user.username}
-            location={photo.location}
-            isFavourite={favouritePhotos.includes(photo.id)}
-            onToggleFavourite={(isFavourite) => isFavourite ? handleAddFavourite(photo) : handleRemoveFavourite(photo)}
-            onClick={() => onOpenModal(photo)}
-          />
-        ))}
-      </ul>
+    <ul className="photo-list">
+      {photos.map((photo) => (
+        <PhotoListItem
+          key={photo.id}
+          imageSource={photo.urls.regular}
+          profile={photo.user.profile}
+          username={photo.user.username}
+          location={photo.location}
+          isFavourite={favouritePhotos.includes(photo.id)}
+          onToggleFavourite={(isFavourite) =>
+            isFavourite ? addFavouritePhoto(photo) : removeFavouritePhoto(photo)
+          }
+          onClick={() => onOpenModal(photo)}
+        />
+      ))}
+    </ul>
   );
 };
 
