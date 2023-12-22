@@ -1,62 +1,72 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
+
+export const ACTIONS = {
+  FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
+  FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
+  SET_PHOTO_DATA: 'SET_PHOTO_DATA',
+  SET_TOPIC_DATA: 'SET_TOPIC_DATA',
+  SELECT_PHOTO: 'SELECT_PHOTO',
+  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS'
+};
+
+const initialState = {
+  isModalOpen: false,
+  selectedPhoto: null,
+  favouritePhotos: [],
+  displayAlert: false,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'OPEN_MODAL':
+      return { ...state, isModalOpen: true, selectedPhoto: action.photo };
+    case 'CLOSE_MODAL':
+      return { ...state, isModalOpen: false };
+    case 'ADD_FAVOURITE':
+      return { ...state, favouritePhotos: [...state.favouritePhotos, action.photo.id] };
+    case 'REMOVE_FAVOURITE':
+      const newPhotos = state.favouritePhotos.filter(id => id !== action.photo.id);
+      return { ...state, favouritePhotos: newPhotos };
+    case 'TOGGLE_ALERT':
+      return { ...state, displayAlert: state.favouritePhotos.length !== 0 };
+    default:
+      throw new Error(
+        `Tried to reduce with unsupported action type: ${action.type}`
+      );
+  }
+}
 
 const useApplicationData = () => {
-  // Modal State Management
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const openModalWithPhoto = (photo) => {
-    setSelectedPhoto(photo);
-    setIsModalOpen(true);
+    dispatch({ type: 'OPEN_MODAL', photo });
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    dispatch({ type: 'CLOSE_MODAL' });
   };
 
-  // Favourite Photos State Management
-  const [favouritePhotos, setFavouritePhotos] = useState([]);
-  const [displayAlert, setDisplayAlert] = useState(false);
-
   const addFavouritePhoto = (photo) => {
-    setFavouritePhotos((prevPhotos) => {
-      const newPhotos = [...prevPhotos, photo.id];
-      return newPhotos;
-    });
+    dispatch({ type: 'ADD_FAVOURITE', photo });
   };
 
   const removeFavouritePhoto = (photo) => {
-    setFavouritePhotos((prevPhotos) => {
-      const newPhotos = prevPhotos.filter((id) => id !== photo.id);
-      return newPhotos;
-    });
+    dispatch({ type: 'REMOVE_FAVOURITE', photo });
   };
 
   useEffect(() => {
-    toggleDisplayAlert();
-  }, [favouritePhotos]);
-
-  const toggleDisplayAlert = () => {
-    return favouritePhotos.length === 0
-      ? setDisplayAlert(false)
-      : setDisplayAlert(true);
-  };
+    dispatch({ type: 'TOGGLE_ALERT' });
+  }, [state.favouritePhotos]);
 
   return {
-    state: {
-      isModalOpen,
-      selectedPhoto,
-      favouritePhotos,
-      displayAlert
-    },
+    state,
     openModalWithPhoto,
     closeModal,
     addFavouritePhoto,
     removeFavouritePhoto,
-    toggleDisplayAlert,
   };
-
 
 };
 
