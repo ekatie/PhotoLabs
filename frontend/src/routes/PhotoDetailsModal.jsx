@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "../styles/PhotoDetailsModal.scss";
 import closeSymbol from "../assets/closeSymbol.svg";
 import PhotoFavButton from "../components/PhotoFavButton";
+import PhotoList from "../components/PhotoList";
 
 const PhotoDetailsModal = ({
   isModalOpen,
@@ -10,15 +11,43 @@ const PhotoDetailsModal = ({
   photo,
   photos,
   onToggleFavourite,
+  favouritePhotos,
+  addFavouritePhoto,
+  removeFavouritePhoto,
 }) => {
   if (!isModalOpen || !photo) return null;
 
-  const { imageSource, profile, username, location, isFavourite } = photo;
+  const {
+    key,
+    imageSource,
+    profile,
+    username,
+    location,
+    isFavourite,
+    similar_photos,
+  } = photo;
 
   const handleToggleFavourite = (event) => {
     event.stopPropagation();
     onToggleFavourite(!isFavourite);
   };
+
+  const [similarPhotos, setSimilarPhotos] = useState([]);
+
+  const findSimilarPhotos = () => {
+    const similarPhotosArray = Object.values(similar_photos);
+
+    // Filter out the selected photo from the similar photos
+    const filteredSimilarPhotos = similarPhotosArray.filter((similarPhoto) => {
+      return similarPhoto.id !== photo.key;
+    });
+
+    return filteredSimilarPhotos;
+  };
+
+  useEffect(() => {
+    setSimilarPhotos(findSimilarPhotos(photos));
+  }, [photo, similar_photos]);
 
   return (
     <>
@@ -58,7 +87,12 @@ const PhotoDetailsModal = ({
             <div>
               <h2 className="photo-details-modal__header">Similar Photos</h2>
               <div className="photo-details-modal__images">
-                {/* <PhotoList photos={photos}/> */}
+                <PhotoList
+                  photos={similarPhotos}
+                  favouritePhotos={favouritePhotos}
+                  addFavouritePhoto={addFavouritePhoto}
+                  removeFavouritePhoto={removeFavouritePhoto}
+                />
               </div>
             </div>
           </div>
