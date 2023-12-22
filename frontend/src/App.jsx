@@ -4,48 +4,17 @@ import photos from "mocks/photos";
 import topics from "mocks/topics";
 import "./App.scss";
 import PhotoDetailsModal from "routes/PhotoDetailsModal";
+import useApplicationData from "hooks/useApplicationData";
 
 const App = () => {
-  // Modal State Management
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
-
-  const openModalWithPhoto = (photo) => {
-    setSelectedPhoto(photo);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // Favourite Photos State Management
-  const [favouritePhotos, setFavouritePhotos] = useState([]);
-  const [displayAlert, setDisplayAlert] = useState(false);
-
-  useEffect(() => {
-    toggleDisplayAlert();
-  }, [favouritePhotos]);
-
-  const addFavouritePhoto = (photo) => {
-    setFavouritePhotos((prevPhotos) => {
-      const newPhotos = [...prevPhotos, photo.id];
-      return newPhotos;
-    });
-  };
-
-  const removeFavouritePhoto = (photo) => {
-    setFavouritePhotos((prevPhotos) => {
-      const newPhotos = prevPhotos.filter((id) => id !== photo.id);
-      return newPhotos;
-    });
-  };
-
-  const toggleDisplayAlert = () => {
-    return favouritePhotos.length === 0
-      ? setDisplayAlert(false)
-      : setDisplayAlert(true);
-  };
+  const {
+    state,
+    openModalWithPhoto,
+    closeModal,
+    addFavouritePhoto,
+    removeFavouritePhoto,
+    toggleDisplayAlert,
+  } = useApplicationData();
 
   return (
     <div className="App">
@@ -53,34 +22,34 @@ const App = () => {
         photos={photos}
         topics={topics}
         onOpenModal={openModalWithPhoto}
-        favouritePhotos={favouritePhotos}
-        displayAlert={displayAlert}
+        favouritePhotos={state.favouritePhotos}
+        displayAlert={state.displayAlert}
         addFavouritePhoto={addFavouritePhoto}
         removeFavouritePhoto={removeFavouritePhoto}
         toggleDisplayAlert={toggleDisplayAlert}
       />
       <PhotoDetailsModal
         photos={photos}
-        favouritePhotos={favouritePhotos}
-        isModalOpen={isModalOpen}
+        favouritePhotos={state.favouritePhotos}
+        isModalOpen={state.isModalOpen}
         onClose={closeModal}
         photo={
-          selectedPhoto && {
-            key: selectedPhoto.id,
-            imageSource: selectedPhoto.urls.regular,
-            profile: selectedPhoto.user.profile,
-            username: selectedPhoto.user.username,
-            location: selectedPhoto.location,
-            isFavourite: favouritePhotos.includes(selectedPhoto.id),
-            similar_photos: selectedPhoto.similar_photos,
+          state.selectedPhoto && {
+            key: state.selectedPhoto.id,
+            imageSource: state.selectedPhoto.urls.regular,
+            profile: state.selectedPhoto.user.profile,
+            username: state.selectedPhoto.user.username,
+            location: state.selectedPhoto.location,
+            isFavourite: state.favouritePhotos.includes(state.selectedPhoto.id),
+            similar_photos: state.selectedPhoto.similar_photos,
           }
         }
         addFavouritePhoto={addFavouritePhoto}
         removeFavouritePhoto={removeFavouritePhoto}
         onToggleFavourite={(isFavourite) =>
           isFavourite
-            ? addFavouritePhoto(selectedPhoto)
-            : removeFavouritePhoto(selectedPhoto)
+            ? addFavouritePhoto(state.selectedPhoto)
+            : removeFavouritePhoto(state.selectedPhoto)
         }
       />
     </div>
