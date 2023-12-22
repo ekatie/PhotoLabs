@@ -25,8 +25,12 @@
 }
 
 .photo-details-modal__images {
-  margin-left: 36px;
-  margin-top: 8px;
+  margin-left: 15px;
+  margin-top: 0px;
+
+  .photo-list__item, .photo-list__image {
+    width: 215px;
+  }
 }
 
 .photo-details-modal__image {
@@ -54,7 +58,7 @@
   font-weight: 500;
   color: #1e1e1e;
   margin-top: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 0px;
   width: 90%;
 }
 
@@ -75,4 +79,8 @@
   font-weight: 700;
   font-size: 12px;
   margin-left: 8px;
+
+  p {
+    margin: 3px 0;
+  }
 }
