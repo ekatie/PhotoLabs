@@ -13,7 +13,6 @@ const App = () => {
     closeModal,
     addFavouritePhoto,
     removeFavouritePhoto,
-    toggleDisplayAlert,
   } = useApplicationData();
 
   return (
@@ -26,7 +25,6 @@ const App = () => {
         displayAlert={state.displayAlert}
         addFavouritePhoto={addFavouritePhoto}
         removeFavouritePhoto={removeFavouritePhoto}
-        toggleDisplayAlert={toggleDisplayAlert}
       />
       <PhotoDetailsModal
         photos={photos}
