@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useReducer } from "react";
 
 export const ACTIONS = {
@@ -75,20 +76,18 @@ const useApplicationData = () => {
 
   // Fetch topics from database
   useEffect(() => {
-    fetch('/api/topics')
-      .then(response => response.json())
-      .then(data => {
-        dispatch({ type: ACTIONS.SET_TOPICS, payload: data });
+    axios.get('/api/topics')
+      .then(response => {
+        dispatch({ type: ACTIONS.SET_TOPICS, payload: response.data });
       })
       .catch(err => console.log(err));
   }, []);
 
   // Fetch photos from database
   useEffect(() => {
-    fetch('/api/photos')
-      .then(response => response.json())
-      .then(data => {
-        dispatch({ type: ACTIONS.SET_PHOTOS, payload: data });
+    axios.get('/api/photos')
+      .then(response => {
+        dispatch({ type: ACTIONS.SET_PHOTOS, payload: response.data });
       })
       .catch(err => console.log(err));
   }, []);
@@ -101,10 +100,9 @@ const useApplicationData = () => {
   // Fetch photos by topic id
   useEffect(() => {
     if (state.topicId !== null) {
-      fetch(`/api/topics/photos/${state.topicId}`)
-        .then(response => response.json())
-        .then(data => {
-          dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPIC, payload: data });
+      axios.get(`/api/topics/photos/${state.topicId}`)
+        .then(response => {
+          dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPIC, payload: response.data });
         })
         .catch(err => console.log(err));
     }
