@@ -1,7 +1,5 @@
 import React from "react";
 import HomeRoute from "components/HomeRoute";
-import photos from "mocks/photos";
-import topics from "mocks/topics";
 import "./App.scss";
 import PhotoDetailsModal from "routes/PhotoDetailsModal";
 import useApplicationData from "hooks/useApplicationData";
@@ -13,21 +11,23 @@ const App = () => {
     closeModal,
     addFavouritePhoto,
     removeFavouritePhoto,
+    getPhotosByTopic,
   } = useApplicationData();
 
   return (
     <div className="App">
       <HomeRoute
-        photos={photos}
-        topics={topics}
+        photos={state.photoData}
+        topics={state.topicData}
         onOpenModal={openModalWithPhoto}
         favouritePhotos={state.favouritePhotos}
         displayAlert={state.displayAlert}
         addFavouritePhoto={addFavouritePhoto}
         removeFavouritePhoto={removeFavouritePhoto}
+        getPhotosByTopic={getPhotosByTopic}
       />
       <PhotoDetailsModal
-        photos={photos}
+        photos={state.photoData}
         favouritePhotos={state.favouritePhotos}
         isModalOpen={state.isModalOpen}
         onClose={closeModal}
