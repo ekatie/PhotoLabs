@@ -13,10 +13,15 @@ const HomeRoute = ({
   addFavouritePhoto,
   removeFavouritePhoto,
   toggleDisplayAlert,
+  getPhotosByTopic,
 }) => {
   return (
     <div className="home-route">
-      <TopNavigation topics={topics} displayAlert={displayAlert} />
+      <TopNavigation
+        topics={topics}
+        displayAlert={displayAlert}
+        getPhotosByTopic={getPhotosByTopic}
+      />
       <PhotoList
         photos={photos}
         favouritePhotos={favouritePhotos}
