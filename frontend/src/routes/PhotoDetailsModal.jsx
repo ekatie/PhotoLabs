@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-
-import "../styles/PhotoDetailsModal.scss";
 import closeSymbol from "../assets/closeSymbol.svg";
 import PhotoFavButton from "../components/PhotoFavButton";
 import PhotoList from "../components/PhotoList";
+import "../styles/PhotoDetailsModal.scss";
 
 const PhotoDetailsModal = ({
   isModalOpen,
@@ -18,7 +17,6 @@ const PhotoDetailsModal = ({
   if (!isModalOpen || !photo) return null;
 
   const {
-    key,
     imageSource,
     profile,
     username,
