@@ -20,11 +20,13 @@ This project is built with the following technologies:
 ## Dependencies
 
 ### Frontend
+
 - **React** (^18.2.0): Used for building user interface components.
 - **SASS** (^1.59.2): Used for styling components.
 - **Axios** (^1.6.5): Used for making HTTP requests to external APIs and backend server.
 
 ### Backend
+
 - **Node.js**: This application runs on Node.js, a JavaScript runtime built on Chrome's V8 JavaScript engine. Ensure you have Node.js installed to run this project.
 - **Express** (^4.16.4): The backbone of our server-side logic.
 - **Dotenv** (^7.0.0): To manage environment variables.
@@ -37,3 +39,17 @@ This project is built with the following technologies:
 
 ## Screenshots
 
+#### PhotoLabs Home Page
+![Project Home Page](https://github.com/ekatie/PhotoLabs/blob/main/docs/PhotoLabs-Home.png?raw=true)
+
+#### Browse Photos By Topic
+![Browse Photos By Topic](https://github.com/ekatie/PhotoLabs/blob/main/docs/PhotoLabs-Topics.gif?raw=true)
+
+#### Large View With Similar Photos
+![Larger Photo View](https://github.com/ekatie/PhotoLabs/blob/main/docs/PhotoLabs-Details-and-Similar-Photos.gif?raw=true)
+
+#### Favourite Photos From Anywhere!
+![Favourite Photos Anywhere](https://github.com/ekatie/PhotoLabs/blob/main/docs/PhotoLabs-Favourite-Photos.gif?raw=true)
+
+#### Favourites Alert Icon
+![Favourites Alert Icon](https://github.com/ekatie/PhotoLabs/blob/main/docs/PhotoLabs-Favourites-Alert.gif?raw=true)
