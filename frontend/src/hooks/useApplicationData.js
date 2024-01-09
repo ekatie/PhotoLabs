@@ -21,19 +21,26 @@ const initialState = {
   photoData: [],
   topicData: [],
   topicId: null,
+  showFavourites: false,
 };
 
 function reducer(state, action) {
+  let newPhotos;
   switch (action.type) {
     case ACTIONS.OPEN_MODAL:
       return { ...state, isModalOpen: true, selectedPhoto: action.photo };
     case ACTIONS.CLOSE_MODAL:
       return { ...state, isModalOpen: false };
     case ACTIONS.ADD_FAVOURITE:
-      return { ...state, favouritePhotos: [...state.favouritePhotos, action.photo.id] };
-    case ACTIONS.REMOVE_FAVOURITE:
-      const newPhotos = state.favouritePhotos.filter(id => id !== action.photo.id);
+      newPhotos = [...state.favouritePhotos, action.photo];
+      localStorage.setItem('favouritePhotos', JSON.stringify(newPhotos));
       return { ...state, favouritePhotos: newPhotos };
+    case ACTIONS.REMOVE_FAVOURITE:
+      newPhotos = state.favouritePhotos.filter(photo => photo.id !== action.photo.id);
+      localStorage.setItem('favouritePhotos', JSON.stringify(newPhotos));
+      return { ...state, favouritePhotos: newPhotos };
+    case ACTIONS.TOGGLE_FAVOURITES:
+      return { ...state, showFavourites: !state.showFavourites };
     case ACTIONS.TOGGLE_ALERT:
       return { ...state, displayAlert: state.favouritePhotos.length !== 0 };
     case ACTIONS.SET_TOPICS:
@@ -50,8 +57,9 @@ function reducer(state, action) {
 }
 
 const useApplicationData = () => {
-
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const initialFavouritePhotos = JSON.parse(localStorage.getItem('favouritePhotos')) || initialState.favouritePhotos;
+  const initialStateWithLocalStorage = { ...initialState, favouritePhotos: initialFavouritePhotos };
+  const [state, dispatch] = useReducer(reducer, initialStateWithLocalStorage);
 
   const openModalWithPhoto = (photo) => {
     dispatch({ type: ACTIONS.OPEN_MODAL, photo });
@@ -67,6 +75,10 @@ const useApplicationData = () => {
 
   const removeFavouritePhoto = (photo) => {
     dispatch({ type: ACTIONS.REMOVE_FAVOURITE, photo });
+  };
+
+  const toggleFavourites = () => {
+    dispatch({ type: ACTIONS.TOGGLE_FAVOURITES });
   };
 
   // Show alert when there are favourited photos
@@ -115,6 +127,7 @@ const useApplicationData = () => {
     addFavouritePhoto,
     removeFavouritePhoto,
     getPhotosByTopic,
+    toggleFavourites
   };
 
 };
