@@ -9,12 +9,14 @@ const TopNavigation = ({
   displayAlert,
   getPhotosByTopic,
   toggleFavourites,
+  setSearchTerm,
+  searchTerm
 }) => {
   return (
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
       <TopicList topics={topics} getPhotosByTopic={getPhotosByTopic} />
-      <SearchBar />
+      <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
       <FavIcon
         selected={true}
         displayAlert={displayAlert}
