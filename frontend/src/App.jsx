@@ -12,6 +12,7 @@ const App = () => {
     addFavouritePhoto,
     removeFavouritePhoto,
     getPhotosByTopic,
+    toggleFavourites,
   } = useApplicationData();
 
   return (
@@ -25,6 +26,8 @@ const App = () => {
         addFavouritePhoto={addFavouritePhoto}
         removeFavouritePhoto={removeFavouritePhoto}
         getPhotosByTopic={getPhotosByTopic}
+        toggleFavourites={toggleFavourites}
+        showFavourites={state.showFavourites}
       />
       <PhotoDetailsModal
         photos={state.photoData}
