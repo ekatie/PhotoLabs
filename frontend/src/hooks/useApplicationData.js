@@ -6,11 +6,14 @@ export const ACTIONS = {
   CLOSE_MODAL: 'CLOSE_MODAL',
   ADD_FAVOURITE: 'ADD_FAVOURITE',
   REMOVE_FAVOURITE: 'REMOVE_FAVOURITE',
+  TOGGLE_FAVOURITES: 'TOGGLE_FAVOURITES',
   TOGGLE_ALERT: 'TOGGLE_ALERT',
   SET_TOPICS: 'SET_TOPICS',
   SET_PHOTOS: 'SET_PHOTOS',
   GET_PHOTOS_BY_TOPIC: 'GET_PHOTOS_BY_TOPIC',
   SET_TOPIC_ID: 'SET_TOPIC_ID',
+  SET_SEARCH_TERM: 'SET_SEARCH_TERM',
+  SET_FILTERED_PHOTOS: 'SET_FILTERED_PHOTOS',
 };
 
 const initialState = {
@@ -22,6 +25,8 @@ const initialState = {
   topicData: [],
   topicId: null,
   showFavourites: false,
+  searchTerm: "",
+  filteredPhotos: [],
 };
 
 function reducer(state, action) {
@@ -51,6 +56,10 @@ function reducer(state, action) {
       return { ...state, photoData: action.payload };
     case ACTIONS.SET_TOPIC_ID:
       return { ...state, topicId: action.payload };
+    case ACTIONS.SET_SEARCH_TERM:
+      return { ...state, searchTerm: action.payload };
+    case ACTIONS.SET_FILTERED_PHOTOS:
+      return { ...state, filteredPhotos: action.payload };
     default:
       return state;
   }
@@ -81,6 +90,10 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.TOGGLE_FAVOURITES });
   };
 
+  const setSearchTerm = (term) => {
+    dispatch({ type: ACTIONS.SET_SEARCH_TERM, payload: term });
+  };
+
   // Show alert when there are favourited photos
   useEffect(() => {
     dispatch({ type: ACTIONS.TOGGLE_ALERT });
@@ -100,6 +113,7 @@ const useApplicationData = () => {
     axios.get('/api/photos')
       .then(response => {
         dispatch({ type: ACTIONS.SET_PHOTOS, payload: response.data });
+        dispatch({ type: ACTIONS.SET_FILTERED_PHOTOS, payload: response.data });
       })
       .catch(err => console.log(err));
   }, []);
@@ -120,6 +134,17 @@ const useApplicationData = () => {
     }
   }, [state.topicId]);
 
+  // Filter photos by search term
+  useEffect(() => {
+    const filteredPhotos = state.photoData.filter(photo =>
+      photo.user.username.toLowerCase().includes(state.searchTerm.toLowerCase()) ||
+      (photo.location && photo.location.city && photo.location.city.toLowerCase().includes(state.searchTerm.toLowerCase())) ||
+      (photo.location && photo.location.country && photo.location.country.toLowerCase().includes(state.searchTerm.toLowerCase()))
+    );
+
+    dispatch({ type: ACTIONS.SET_FILTERED_PHOTOS, payload: filteredPhotos });
+  }, [state.searchTerm, state.photoData]);
+
   return {
     state,
     openModalWithPhoto,
@@ -127,7 +152,8 @@ const useApplicationData = () => {
     addFavouritePhoto,
     removeFavouritePhoto,
     getPhotosByTopic,
-    toggleFavourites
+    toggleFavourites,
+    setSearchTerm,
   };
 
 };
