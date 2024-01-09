@@ -15,6 +15,9 @@ const HomeRoute = ({
   getPhotosByTopic,
   toggleFavourites,
   showFavourites,
+  setSearchTerm,
+  searchTerm,
+  filteredPhotos,
 }) => {
   return (
     <div className="home-route">
@@ -23,6 +26,8 @@ const HomeRoute = ({
         displayAlert={displayAlert}
         getPhotosByTopic={getPhotosByTopic}
         toggleFavourites={toggleFavourites}
+        setSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
       />
       <PhotoList
         photos={photos}
@@ -32,6 +37,7 @@ const HomeRoute = ({
         onToggleIcon={toggleDisplayAlert}
         onOpenModal={onOpenModal}
         showFavourites={showFavourites}
+        filteredPhotos={filteredPhotos}
       />
     </div>
   );
