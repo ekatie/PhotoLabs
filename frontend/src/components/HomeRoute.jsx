@@ -13,6 +13,8 @@ const HomeRoute = ({
   removeFavouritePhoto,
   toggleDisplayAlert,
   getPhotosByTopic,
+  toggleFavourites,
+  showFavourites,
 }) => {
   return (
     <div className="home-route">
@@ -20,6 +22,7 @@ const HomeRoute = ({
         topics={topics}
         displayAlert={displayAlert}
         getPhotosByTopic={getPhotosByTopic}
+        toggleFavourites={toggleFavourites}
       />
       <PhotoList
         photos={photos}
@@ -28,6 +31,7 @@ const HomeRoute = ({
         removeFavouritePhoto={(photo) => removeFavouritePhoto(photo)}
         onToggleIcon={toggleDisplayAlert}
         onOpenModal={onOpenModal}
+        showFavourites={showFavourites}
       />
     </div>
   );
