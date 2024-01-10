@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useReducer } from "react";
 
+// Action types for useReducer
 export const ACTIONS = {
   OPEN_MODAL: 'OPEN_MODAL',
   CLOSE_MODAL: 'CLOSE_MODAL',
@@ -17,6 +18,7 @@ export const ACTIONS = {
   FIND_SIMILAR_PHOTOS: 'FIND_SIMILAR_PHOTOS',
 };
 
+// Initial state of the application
 const initialState = {
   isModalOpen: false,
   selectedPhoto: null,
@@ -31,6 +33,7 @@ const initialState = {
   similarPhotos: [],
 };
 
+// Reducer function to update state
 function reducer(state, action) {
   let newPhotos;
   switch (action.type) {
@@ -68,6 +71,19 @@ function reducer(state, action) {
       return state;
   }
 }
+
+/**
+ * This custom hook manages the state of the application. It is used in App.js.
+ * @returns {Object} state - The state of the application
+ * @returns {Function} openModalWithPhoto - Function to open modal with photo
+ * @returns {Function} closeModal - Function to close modal
+ * @returns {Function} addFavouritePhoto - Function to add photo to favourites
+ * @returns {Function} removeFavouritePhoto - Function to remove photo from favourites
+ * @returns {Function} getPhotosByTopic - Function to get photos by topic
+ * @returns {Function} toggleFavourites - Function to toggle favourites
+ * @returns {Function} setSearchTerm - Function to set search term
+ * @returns {Function} findSimilarPhotos - Function to find similar photos
+ */
 
 const useApplicationData = () => {
   const initialFavouritePhotos = JSON.parse(localStorage.getItem('favouritePhotos')) || initialState.favouritePhotos;
@@ -149,6 +165,7 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_FILTERED_PHOTOS, payload: filteredPhotos });
   }, [state.searchTerm, state.photoData]);
 
+  // Find similar photos for selected photo in modal
   const findSimilarPhotos = (photo) => {
     // Check if photo and photo.similar_photos are defined
     if (!photo || !photo.similar_photos) {
@@ -182,7 +199,6 @@ const useApplicationData = () => {
     setSearchTerm,
     findSimilarPhotos,
   };
-
 };
 
 export default useApplicationData;
