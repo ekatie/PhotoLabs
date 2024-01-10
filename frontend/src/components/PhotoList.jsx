@@ -2,6 +2,19 @@ import React from "react";
 import PhotoListItem from "./PhotoListItem";
 import "../styles/PhotoList.scss";
 
+/**
+ * This component renders a list of photos.
+ * @param {Object} props
+ * @param {Object[]} props.favouritePhotos - an array of favourite photos
+ * @param {function} props.addFavouritePhoto - function to add a photo to the list of favourites
+ * @param {function} props.removeFavouritePhoto - function to remove a photo from the list of favourites
+ * @param {function} props.onOpenModal - function to open the modal
+ * @param {boolean} props.showFavourites - indicates whether the list of photos to be displayed is the list of favourites or not
+ * @param {Object[]} props.filteredPhotos - an array of photos that match the search term
+ * @param {Object[]} props.photos - an array of photos
+ * @returns {JSX.Element}
+ */
+
 const PhotoList = ({
   favouritePhotos,
   addFavouritePhoto,
@@ -11,6 +24,7 @@ const PhotoList = ({
   filteredPhotos,
   photos,
 }) => {
+
   let displayedPhotos;
   if (showFavourites) {
     displayedPhotos = favouritePhotos;
