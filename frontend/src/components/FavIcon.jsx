@@ -1,5 +1,14 @@
 import React from "react";
 
+/**
+ * This component renders the favourite icon.
+ * @param {Object} props
+ * @param {boolean} props.displayAlert - whether to display the alert or not
+ * @param {boolean} props.selected - whether the photo is a favourite or not
+ * @param {function} props.toggleFavourites - function to toggle whether the selected photo is a favourite or not
+ * @returns {JSX.Element}
+ */
+
 const FavIcon = ({ displayAlert, selected, toggleFavourites }) => {
   return (
     <svg
