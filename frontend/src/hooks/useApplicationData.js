@@ -14,6 +14,7 @@ export const ACTIONS = {
   SET_TOPIC_ID: 'SET_TOPIC_ID',
   SET_SEARCH_TERM: 'SET_SEARCH_TERM',
   SET_FILTERED_PHOTOS: 'SET_FILTERED_PHOTOS',
+  FIND_SIMILAR_PHOTOS: 'FIND_SIMILAR_PHOTOS',
 };
 
 const initialState = {
@@ -27,6 +28,7 @@ const initialState = {
   showFavourites: false,
   searchTerm: "",
   filteredPhotos: [],
+  similarPhotos: [],
 };
 
 function reducer(state, action) {
@@ -60,6 +62,8 @@ function reducer(state, action) {
       return { ...state, searchTerm: action.payload };
     case ACTIONS.SET_FILTERED_PHOTOS:
       return { ...state, filteredPhotos: action.payload };
+    case ACTIONS.FIND_SIMILAR_PHOTOS:
+      return { ...state, similarPhotos: action.payload };
     default:
       return state;
   }
@@ -145,6 +149,28 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_FILTERED_PHOTOS, payload: filteredPhotos });
   }, [state.searchTerm, state.photoData]);
 
+  const findSimilarPhotos = (photo) => {
+    // Check if photo and photo.similar_photos are defined
+    if (!photo || !photo.similar_photos) {
+      return [];
+    }
+
+    // Extract the IDs from photo.similar_photos
+    const similarPhotoIds = photo.similar_photos.map(similarPhoto => similarPhoto.id);
+
+    // Filter state.photoData to get the photos with these IDs
+    const similarPhotosFromDb = state.photoData.filter(photo => similarPhotoIds.includes(photo.id));
+
+    return similarPhotosFromDb;
+  };
+
+  useEffect(() => {
+    // Ensure that the selected photo's similar_photos data is available
+    if (state.selectedPhoto && state.selectedPhoto.similar_photos) {
+      dispatch({ type: ACTIONS.FIND_SIMILAR_PHOTOS, payload: findSimilarPhotos(state.selectedPhoto.similar_photos) });
+    }
+  }, [state.selectedPhoto]);
+
   return {
     state,
     openModalWithPhoto,
@@ -154,6 +180,7 @@ const useApplicationData = () => {
     getPhotosByTopic,
     toggleFavourites,
     setSearchTerm,
+    findSimilarPhotos,
   };
 
 };
