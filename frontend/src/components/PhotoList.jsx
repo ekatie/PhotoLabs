@@ -9,12 +9,15 @@ const PhotoList = ({
   onOpenModal,
   showFavourites,
   filteredPhotos,
+  photos,
 }) => {
   let displayedPhotos;
   if (showFavourites) {
     displayedPhotos = favouritePhotos;
-  } else {
+  } else if (filteredPhotos) {
     displayedPhotos = filteredPhotos;
+  } else {
+    displayedPhotos = photos;
   }
 
   return (
