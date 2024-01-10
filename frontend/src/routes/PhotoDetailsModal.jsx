@@ -4,6 +4,21 @@ import PhotoFavButton from "../components/PhotoFavButton";
 import PhotoList from "../components/PhotoList";
 import "../styles/PhotoDetailsModal.scss";
 
+/**
+ * This component renders the modal that displays the details of a selected photo.
+ * @param {Object} props
+ * @param {boolean} props.isModalOpen - indicates whether the modal is open or not
+ * @param {function} props.onClose - function to close the modal
+ * @param {Object} props.photo - the photo to be displayed in the modal
+ * @param {Object[]} props.similarPhotos - an array of photos similar to the selected photo
+ * @param {function} props.onToggleFavourite - function to toggle whether the selected photo is a favourite or not
+ * @param {Object[]} props.favouritePhotos - an array of favourite photos
+ * @param {function} props.addFavouritePhoto - function to add a photo to the list of favourites
+ * @param {function} props.removeFavouritePhoto - function to remove a photo from the list of favourites
+ * @param {function} props.onOpenModal - function to open the modal
+ * @returns {JSX.Element}
+ */
+
 const PhotoDetailsModal = ({
   isModalOpen,
   onClose,
