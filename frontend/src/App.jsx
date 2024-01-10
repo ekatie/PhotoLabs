@@ -4,6 +4,11 @@ import PhotoDetailsModal from "routes/PhotoDetailsModal";
 import useApplicationData from "hooks/useApplicationData";
 import "./App.scss";
 
+/**
+ * This is the top-level component for the application. It renders the HomeRoute component and the PhotoDetailsModal component.
+ * @returns {JSX.Element}
+ */
+
 const App = () => {
   const {
     state,
