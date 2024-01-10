@@ -14,6 +14,7 @@ const App = () => {
     getPhotosByTopic,
     toggleFavourites,
     setSearchTerm,
+    findSimilarPhotos,
   } = useApplicationData();
 
   return (
@@ -34,7 +35,9 @@ const App = () => {
         filteredPhotos={state.filteredPhotos}
       />
       <PhotoDetailsModal
+        onOpenModal={openModalWithPhoto}
         photos={state.photoData}
+        similarPhotos={findSimilarPhotos(state.selectedPhoto)}
         favouritePhotos={state.favouritePhotos}
         isModalOpen={state.isModalOpen}
         onClose={closeModal}
@@ -45,7 +48,9 @@ const App = () => {
             profile: state.selectedPhoto.user.profile,
             username: state.selectedPhoto.user.username,
             location: state.selectedPhoto.location,
-            isFavourite: state.favouritePhotos.includes(state.selectedPhoto.id),
+            isFavourite: state.favouritePhotos.some(
+              (photo) => photo.id === state.selectedPhoto.id
+            ),
             similar_photos: state.selectedPhoto.similar_photos,
           }
         }
